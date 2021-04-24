@@ -15,6 +15,7 @@
 #'
 #' @param returnall (optional) String. Defines returned variables as one of "fitted","trend", "h1", "h2", (...and so on for chosen number of harmonics) or "all" to get a list of all of them. Default is "fitted".
 #'
+#' @param printvar(optinal) Boolean. If TRUE, prints explained variance of every harmonic. Default is FALSE.
 #'
 #' @return A numeric vector with the fitted values or a list of vectors with fitted values, trend and all individual harmonics (in this order).
 #'
@@ -66,21 +67,14 @@ harmonics_fun_restr <- function(user_vals,
 
     # Otherwise apply harmonic analysis
   } else {
-
-    my_radians <- get_radians(user_dates, ref_date)
-
     df_for_reg <- get_df(user_vals, user_dates, harmonic_deg, ref_date)
     coefficients <- apply_regression(df_for_reg, harmonic_deg)
 
-    #df_for_reg <- as.data.frame(values[[1]])
-    #coefficients <- values[[2]]
-
-    # output is modelled time series with original input time steps
+    # output shall be modelled time series with original input time steps
     if (is.null(new_dates)){
       fitted <- calculate_fitted(df=df_for_reg, coefs=coefficients, harmonic_deg, returnall, user_vals, printvar)}
 
-
-    # output is modelled equidistant time series with new time steps
+    # output shall be modelled equidistant time series with new time steps
     if (! is.null(new_dates)) {
       # calculate radians,sines and cosines
       # a dummy is assigned to user_vals to preserve the data frame structure that is used in the case of modelling with original dates
@@ -90,7 +84,6 @@ harmonics_fun_restr <- function(user_vals,
     }
 
     return (fitted)
-
   }
 }
 
