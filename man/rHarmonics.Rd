@@ -3,7 +3,6 @@
 \docType{package}
 \name{rHarmonics}
 \alias{rHarmonics}
-\alias{rHarmonics-package}
 \title{R package harmonic modelling}
 \description{
 This R package enables the user to model fitted harmonic values of various harmonic degrees.
