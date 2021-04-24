@@ -15,7 +15,7 @@
 #'
 #' @param returnall (optional) String. Defines returned variables as one of "fitted","trend", "h1", "h2", (...and so on for chosen number of harmonics) or "all" to get a list of all of them. Default is "fitted".
 #'
-#' @param printvar(optinal) Boolean. If TRUE, prints explained variance of every harmonic. Default is FALSE.
+#' @param printvar (optional) Boolean. If TRUE, prints explained variance of every harmonic. Default is FALSE.
 #'
 #' @return A numeric vector with the fitted values or a list of vectors with fitted values, trend and all individual harmonics (in this order).
 #'
