@@ -29,7 +29,14 @@
 #'
 #' @examples
 #'
-#' TODO
+# Apply harmonic function on multi-layer raster file
+#'
+#' library(raster)
+#'
+#' # Load sample cloud- and snow-free MODIS TimeSeries
+#' sample_raster <- raster::brick(system.file(package = "rHarmonics",
+#'                                            "extdata",
+#'                                            "ndvi_harz.tif"))
 #'
 #' @export
 #'

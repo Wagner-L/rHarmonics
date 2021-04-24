@@ -1,6 +1,5 @@
 # rHarmonics
-[![DOI](https://zenodo.org/badge/256769269.svg)](https://zenodo.org/badge/latestdoi/256769269)
-
+test
 R package for harmonic modelling of time-series data.
 
 <img src="images/NDVI_combined_compressed.gif" width=1000>
