@@ -116,7 +116,7 @@ fitted_raster <- raster::calc(raster_ndvi_harz,
                                                                 new_dates=new_dates)
                               })
 ```
-Animation of daily NDVI values with time series graph of three selected pixels:
+Animation of daily NDVI values with time series graph of two selected pixels:
 <img src="images/demo_harz_3deg.gif" width=1000>
 
 The modelled curve allows a clear distinction between deciduous and coniferous forests.
