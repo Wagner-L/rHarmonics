@@ -55,13 +55,18 @@ get_df <- function(user_vals, user_dates, harmonic_deg, ref_date){
 }
 
 
-apply_regression <- function(df_for_reg, harmonic_deg){
+apply_regression <- function(df_for_reg, harmonic_deg, print_variance){
   # Ordinary Least Squares Regression
   my_reg <- stats::lm(formula = user_vals ~ ., data = df_for_reg)
   # Get coefficients (constant is intercept value)
   # For coefficient and radians it's easy ...
   cons_coef <- my_reg$coefficients[1]
   t_coef <- my_reg$coefficients[3]
+
+  if (print_variance == TRUE){
+    print(paste0("overall r-squared:", summary(my_reg)$r.squared))
+  }
+
   # ... for the sines and cosines selecting the right columns is a little more complicated
   # Start with 4 because the first three values are the ndvi, my_cons and my_radians
   # First define the start and stop column for the sines and cosines ...
@@ -78,12 +83,12 @@ apply_regression <- function(df_for_reg, harmonic_deg){
 
 
 variance <- function(i, user_vals, cos_coef, sin_coef){
-  (length(user_vals)*sqrt(cos_coef[i]^2 +sin_coef[i]^2))/(2*(length(user_vals)-1) * sd(user_vals, na.rm=T))
+  ((length(user_vals)*sqrt(cos_coef[i]^2 +sin_coef[i]^2))/(2*(length(user_vals)-1) * sd(user_vals, na.rm=T)))/100
 }
 
 
 
-calculate_fitted <- function(df, coefs, harmonic_deg, returnall, user_vals, printvar){
+calculate_fitted <- function(df, coefs, harmonic_deg, return_vals, user_vals, print_variance){
   ### Calculate fitted values ###
 
   # multiply independent variables with the coefficients
@@ -104,8 +109,8 @@ calculate_fitted <- function(df, coefs, harmonic_deg, returnall, user_vals, prin
 
   for (i in 1:harmonic_deg){
     assign(paste0("h",i), df[,i+3] + df[,i+3+harmonic_deg])
-    if (printvar == T){
-      print(paste0("variance h", i,": ", assign(paste0("var", i), variance(i=i,user_vals,cos_coef=coefs[[4]], sin_coef=coefs[[3]]))))
+    if (print_variance == T){
+      print(paste0("explained variance h", i,": ", assign(paste0("var", i), variance(i=i,user_vals,cos_coef=coefs[[4]], sin_coef=coefs[[3]]))))
     }
 
   }
@@ -114,9 +119,9 @@ calculate_fitted <- function(df, coefs, harmonic_deg, returnall, user_vals, prin
   #h2 = df[,5] + df[,8]
   #h3 = df[,6] + df[,9]
 
-  if (returnall == "all"){
+  if (return_vals == "all"){
     return(append(list(fitted, trend), lapply(seq(1,harmonic_deg), function(x) eval(parse(text = paste0("h", x))))))
   } else {
-    return(eval(parse(text = returnall)))
+    return(eval(parse(text = return_vals)))
   }
 }

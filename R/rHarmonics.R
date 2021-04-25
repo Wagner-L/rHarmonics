@@ -5,11 +5,13 @@
 #' @details Functions included in this package are:
 #' \itemize{
 #'   \item \code{\link[rHarmonics]{harmonics_fun}}
+#'   \item \code{\link[rHarmonics]{harmonics_fun_eq}}
 #' }
 #'
 #' @docType package
 #'
 #' @author Marius Philipp \email{marius.philipp@uni-wuerzburg.de}
+#' @author Luisa Wagner \email{luisa.wagner@stud-mail.uni-wuerzburg.de}
 #'
 #' @name rHarmonics
 NULL
