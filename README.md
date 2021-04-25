@@ -41,7 +41,7 @@ In this example a fitted curve using three harmonics is computed based on a Sent
 ndvi_df <- base::readRDS(system.file(package = "rHarmonics",
                                      "extdata", "S2_ndvi_harz.rds"))
 
-# create a daily date sequence of 2020 as desired new dates for modelling
+# create a daily date sequence of 2020 to use as desired new dates for modelling
 new_dates =  seq(as.Date("2020/01/01"), by = "day", length.out = 366)
 new_dates
 
@@ -64,7 +64,7 @@ colnames(df_fitted) = c("new_dates", "fitted", "trend", "h1", "h2", "h3")
 library(ggplot2)
 
 colors <- c("fitted" = "darkblue")
-linetypes = c("fitted" = "solid", "trend"= "solid", "h1"="longdash", "h2"= "dashed", "h3" = "dotted")
+linetypes <- c("trend"= "solid", "h1"="longdash", "h2"= "dashed", "h3" = "dotted")
 
 ggplot(data=df_fitted, aes(x=new_dates)) +
   geom_point(data=ndvi_df, mapping = aes(x = dates, y = values), size=0.5)+
@@ -118,8 +118,11 @@ fitted_raster <- raster::calc(raster_ndvi_harz,
                                                                 new_dates=new_dates)
                               })
 ```
+Animation of daily NDVI values with time series graph of three selected pixels:
 
 <img src="images/joined_points.gif" width=1000>
+
+
 
 ## Citation
 Philipp, M. B. (2020): rHarmonics V.1.0. Zenodo. https://doi.org/10.5281/zenodo.3994381.
