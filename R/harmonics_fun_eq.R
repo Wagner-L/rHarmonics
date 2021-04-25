@@ -31,7 +31,6 @@
 #'
 #' @examples
 #'
-#'
 #' @export
 #'
 harmonics_fun_eq <- function(user_vals,
@@ -40,7 +39,9 @@ harmonics_fun_eq <- function(user_vals,
                                 ref_date = as.Date("1970-01-01", format = "%Y-%m-%d"),
                                 new_dates =NULL,
                                 return_vals="fitted",
-                                print_variance=FALSE){
+                                print_variance=FALSE,
+                                #maxgap = NULL
+                                ){
 
   ### For every missing output parameter set the default ###
   if (missing(user_vals)){
@@ -68,6 +69,13 @@ harmonics_fun_eq <- function(user_vals,
 
     # Otherwise apply harmonic analysis
   } else {
+
+    # if (! is.null(maxgap)){
+    #   df <- interpolate_ts(dates=user_dates, values=user_vals, maxgap= maxgap)
+    #   user_dates = df[1,]
+    #   user_vals = df[,2]
+    # }
+
     df_for_reg <- get_df(user_vals, user_dates, harmonic_deg, ref_date)
     coefficients <- apply_regression(df_for_reg, harmonic_deg, print_variance)
 

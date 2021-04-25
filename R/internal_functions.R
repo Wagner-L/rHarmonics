@@ -3,6 +3,22 @@
 #' @keywords internal
 #' @noRd
 
+# not yet implemented
+# interpolate_ts <- function(dates,values, maxgap=maxgap){
+#   df <-  data.frame(dates, values)
+#   for(i in 1:(length(dates)-1)){
+#     gap <-  as.numeric(difftime(dates[i+1], dates[i], units = "days"))
+#     if (gap > maxgap){
+#       new_date <-  dates[i] + gap/2
+#       new_val <- values[i]+ ((values[i+1]-values[i])/2)
+#       df[nrow(df)+1,1] <- as.POSIXct(new_date, format="%Y-%m-%d")
+#       df[nrow(df),2] <- new_val
+#     }
+#   }
+#   df <- dplyr::arrange(df, df$dates)
+#   return(df)
+# }
+
 get_df <- function(user_vals, user_dates, harmonic_deg, ref_date){
   for (i in 1:length(user_dates)){
     current_date <- user_dates[i]
@@ -83,7 +99,7 @@ apply_regression <- function(df_for_reg, harmonic_deg, print_variance){
 
 
 variance <- function(i, user_vals, cos_coef, sin_coef){
-  ((length(user_vals)*sqrt(cos_coef[i]^2 +sin_coef[i]^2))/(2*(length(user_vals)-1) * sd(user_vals, na.rm=T)))/100
+  ((length(user_vals)*sqrt(cos_coef[i]^2 +sin_coef[i]^2))/(2*(length(user_vals)-1) * sd(user_vals, na.rm=T)))#/100
 }
 
 
@@ -114,10 +130,6 @@ calculate_fitted <- function(df, coefs, harmonic_deg, return_vals, user_vals, pr
     }
 
   }
-
-  #h1 = df[,4] + df[,7]
-  #h2 = df[,5] + df[,8]
-  #h3 = df[,6] + df[,9]
 
   if (return_vals == "all"){
     return(append(list(fitted, trend), lapply(seq(1,harmonic_deg), function(x) eval(parse(text = paste0("h", x))))))

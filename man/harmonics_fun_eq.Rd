@@ -11,7 +11,8 @@ harmonics_fun_eq(
   ref_date = as.Date("1970-01-01", format = "\%Y-\%m-\%d"),
   new_dates = NULL,
   return_vals = "fitted",
-  print_variance = FALSE
+  print_variance = FALSE,
+  maxgap = NULL
 )
 }
 \arguments{
@@ -45,7 +46,6 @@ To calculate the harmonic fitted curve of a periodic signal,
          artificial time steps other than the input dates.
 }
 \examples{
-
 
 }
 \references{
