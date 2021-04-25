@@ -120,7 +120,7 @@ fitted_raster <- raster::calc(raster_ndvi_harz,
 ```
 Animation of daily NDVI values with time series graph of three selected pixels:
 
-<img src="images/joined_points.gif" width=1000>
+<img src="images/demo_harz_3deg.gif" width=1000>
 
 
 
