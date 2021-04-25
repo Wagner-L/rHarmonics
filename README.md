@@ -85,6 +85,8 @@ Result for modelling with 3 harmonics:
 For comparison - Result for modelling with 4 harmonics:
 <img src="images/demo_harz_4deg.png" width=1000>
 
+
+
 The function can also be applied on a multi-layer raster stack to create a cloud-interpolated psuedo times-series data set:
 
 ```R
