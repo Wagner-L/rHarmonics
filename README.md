@@ -89,22 +89,29 @@ For comparison - Result for modelling with 4 harmonics:
 
 The function can also be applied on a multi-layer raster stack to create a cloud-interpolated psuedo times-series data set:
 
-```R
-# Apply harmonic function on multi-layer raster file
+The ratser package's calc() function is used to apply harmonic 
+modelling on the vector of each pixelin the raster. As it can 
+only return one layer per time step, only fitted values are 
+returned (which isset as default). Also no variances should be printed.
 
+```R
 library(raster)
 
-# Load sample cloud- and snow-free MODIS TimeSeries
-sample_raster <- raster::brick(system.file(package = "rHarmonics",
-                                           "extdata",
-                                           "MODIS_NDVI_stack.tif"))
+# Load sample cloud masked Sentinel-2 time series raster brick
+raster_ndvi_harz <- raster::brick(system.file(package = "rHarmonics",
+                                              "extdata",
+                                              "S2_ndvi_harz.tif"))
 
-fitted_raster <- raster::calc(sample_raster,
+fitted_raster <- raster::calc(raster_ndvi_harz,
                               function(x){
-                                 harmonics_fun(x, user_dates = ndvi_df$dates,
-                                               harmonic_deg = 3)
+                                rHarmonics::harmonics_fun_eq(user_vals=x,
+                                                                user_dates = ndvi_df$dates,
+                                                                harmonic_deg = 3,
+                                                                new_dates=new_dates)
                               })
 ```
+
+<img src="images/joined_points.gif" width=1000>
 
 ## Citation
 Philipp, M. B. (2020): rHarmonics V.1.0. Zenodo. https://doi.org/10.5281/zenodo.3994381.
