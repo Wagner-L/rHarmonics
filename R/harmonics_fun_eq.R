@@ -13,40 +13,34 @@
 #'
 #' @param new_dates (optional) A vector with Date objects. See \code{\link[base]{as.Date}}. These are the desired artifical time steps.
 #'
-#' @param returnall (optional) String. Defines returned variables as one of "fitted","trend", "h1", "h2", (...and so on for chosen number of harmonics) or "all" to get a list of all of them. Default is "fitted".
+#' @param return_vals (optional) String. Defines returned variables as one of "fitted","trend", "h1", "h2", (...and so on for chosen number of harmonics) or "all" to get a list of all of them. Default is "fitted".
 #'
-#' @param printvar (optional) Boolean. If TRUE, prints explained variance of every harmonic. Default is FALSE.
+#' @param print_variance (optional) Boolean. If TRUE, prints explained variance of every harmonic. Default is FALSE.
 #'
 #' @return A numeric vector with the fitted values or a list of vectors with fitted values, trend and all individual harmonics (in this order).
 #'
 #' @details To calculate the harmonic fitted curve of a periodic signal,
 #'          ordinary least squares regressions are computed using coupled
 #'          sine and cosine curves on time-series data. The underlying algorithm
-#'          is based on Shumway & Stoffer (2017) equations 4.1 – 4.2.
+#'          is based on Shumway & Stoffer (2017) equations 4.1 – 4.2. Based on
+#'          the derived function,the input of new dates allows to calculate
+#'          artificial time steps other than the input dates.
 #'
 #' @references Shumway, R. H., & Stoffer, D. S. (2017). Time series analysis and its
 #'             applications: with R examples. Springer.
 #'
 #' @examples
 #'
-# Apply harmonic function on multi-layer raster file
-#'
-#' library(raster)
-#'
-#' # Load sample cloud- and snow-free MODIS TimeSeries
-#' sample_raster <- raster::brick(system.file(package = "rHarmonics",
-#'                                            "extdata",
-#'                                            "ndvi_harz.tif"))
 #'
 #' @export
 #'
-harmonics_fun_restr <- function(user_vals,
+harmonics_fun_eq <- function(user_vals,
                                 user_dates,
                                 harmonic_deg = 3,
                                 ref_date = as.Date("1970-01-01", format = "%Y-%m-%d"),
                                 new_dates =NULL,
-                                returnall="fitted",
-                                printvar=FALSE){
+                                return_vals="fitted",
+                                print_variance=FALSE){
 
   ### For every missing output parameter set the default ###
   if (missing(user_vals)){
@@ -75,11 +69,11 @@ harmonics_fun_restr <- function(user_vals,
     # Otherwise apply harmonic analysis
   } else {
     df_for_reg <- get_df(user_vals, user_dates, harmonic_deg, ref_date)
-    coefficients <- apply_regression(df_for_reg, harmonic_deg)
+    coefficients <- apply_regression(df_for_reg, harmonic_deg, print_variance)
 
     # output shall be modelled time series with original input time steps
     if (is.null(new_dates)){
-      fitted <- calculate_fitted(df=df_for_reg, coefs=coefficients, harmonic_deg, returnall, user_vals, printvar)}
+      fitted <- calculate_fitted(df=df_for_reg, coefs=coefficients, harmonic_deg, return_vals, user_vals, print_variance)}
 
     # output shall be modelled equidistant time series with new time steps
     if (! is.null(new_dates)) {
@@ -87,7 +81,7 @@ harmonics_fun_restr <- function(user_vals,
       # a dummy is assigned to user_vals to preserve the data frame structure that is used in the case of modelling with original dates
       df_new <- get_df(user_vals=rep(0, length(new_dates)), user_dates=new_dates, harmonic_deg, ref_date)
       # calculate fitted values basedon new dates
-      fitted <- calculate_fitted(df=df_new, coefs=coefficients, harmonic_deg, returnall, user_vals, printvar)
+      fitted <- calculate_fitted(df=df_new, coefs=coefficients, harmonic_deg, return_vals, user_vals, print_variance)
     }
 
     return (fitted)
