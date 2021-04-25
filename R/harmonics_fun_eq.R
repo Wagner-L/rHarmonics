@@ -39,9 +39,7 @@ harmonics_fun_eq <- function(user_vals,
                                 ref_date = as.Date("1970-01-01", format = "%Y-%m-%d"),
                                 new_dates =NULL,
                                 return_vals="fitted",
-                                print_variance=FALSE,
-                                #maxgap = NULL
-                                ){
+                                print_variance=FALSE ){
 
   ### For every missing output parameter set the default ###
   if (missing(user_vals)){

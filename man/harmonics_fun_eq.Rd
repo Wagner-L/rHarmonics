@@ -11,8 +11,7 @@ harmonics_fun_eq(
   ref_date = as.Date("1970-01-01", format = "\%Y-\%m-\%d"),
   new_dates = NULL,
   return_vals = "fitted",
-  print_variance = FALSE,
-  maxgap = NULL
+  print_variance = FALSE
 )
 }
 \arguments{
