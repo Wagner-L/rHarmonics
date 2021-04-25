@@ -6,6 +6,15 @@ To calculate the harmonic fitted curve of a periodic signal, ordinary least squa
 
 <img src="images/Harmonic_Equation.png" width=500>
 
+Coupled sine and cosine waves of a certain frequency are called harmonic. A harmonic is characterised by its amplitude and phase. The number of the harmonic indicates the number of cycles completed by the wave over the year. 
+
+Together with a trend component, the sum of all harmonics produces the fitted curve.
+
+Every component contains a proportion of the explained variance of the original values. Most variation is contained in the trend component and the first two harmonics, presenting biannual and triannual vegetation development.
+
+
+
+
 ## Installation
 
 To install the current forked version, use `devtools`.
@@ -16,18 +25,17 @@ devtools::install_github("Wagner-L/rHarmonics")
 
 ## Available Functions
 
-The following functions are currently available and tested on Windows 10.
+The following functions are currently available and tested on Manjaro Linux.
 
-* `harmonics_fun()` This function enables the user to model different number of cycles per year for a given time series data set (8)original function from MBalthasar/rHarmonics).
+* `harmonics_fun()` This function enables the user to model different number of cycles per year for a given time series data set (original function from MBalthasar/rHarmonics).
 
 * `harmonics_fun_eq()` This function is based on harmonics_fun() and additionally enables to calculate artificial, equidistant time steps. Furthermore explained variance can be printed.
 
 ## Example
 
-In this example a fitted curve using three cylces per year based on a NDVI MODIS timeseries is computed:
+In this example a fitted curve using three harmonics is computed based on a Sentinel 2 NDVI time series data:
 
 ```R
-library(ggplot2)
 
 # Load sample NDVI time-series data.frame
 ndvi_df <- base::readRDS(system.file(package = "rHarmonics",
@@ -37,7 +45,7 @@ ndvi_df <- base::readRDS(system.file(package = "rHarmonics",
 new_dates =  seq(as.Date("2020/01/01"), by = "day", length.out = 366)
 new_dates
 
-# Apply harmonic function using 3 cycles per year
+# Apply harmonic function using 3 harmonics
 # fitted values, trendand allharmonics are returned
 # overall explained varianceand of each harmonic is printed
 
@@ -80,19 +88,19 @@ ggplot(data=df_fitted, aes(x=new_dates)) +
   scale_linetype_manual(values = linetypes)
 ```
 Result for modelling with 3 harmonics:
-<img src="images/demo_harz_3deg.png" width=1000>
+<img src="images/demo_harz_3deg.png" width=800>
 
 For comparison - Result for modelling with 4 harmonics:
-<img src="images/demo_harz_4deg.png" width=1000>
+<img src="images/demo_harz_4deg.png" width=800>
 
 
 
 The function can also be applied on a multi-layer raster stack to create a cloud-interpolated psuedo times-series data set:
 
 The ratser package's calc() function is used to apply harmonic 
-modelling on the vector of each pixelin the raster. As it can 
+modelling on the vector of each pixel in the raster. As it can 
 only return one layer per time step, only fitted values are 
-returned (which isset as default). Also no variances should be printed.
+returned (which is set as default). Also no variances should be printed.
 
 ```R
 library(raster)
