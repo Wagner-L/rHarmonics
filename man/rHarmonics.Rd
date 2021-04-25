@@ -11,8 +11,11 @@ This R package enables the user to model fitted harmonic values of various harmo
 Functions included in this package are:
 \itemize{
   \item \code{\link[rHarmonics]{harmonics_fun}}
+  \item \code{\link[rHarmonics]{harmonics_fun_eq}}
 }
 }
 \author{
 Marius Philipp \email{marius.philipp@uni-wuerzburg.de}
+
+Luisa Wagner \email{luisa.wagner@stud-mail.uni-wuerzburg.de}
 }
