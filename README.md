@@ -82,7 +82,7 @@ ggplot(data=df_fitted, aes(x=new_dates)) +
 Result for modelling with 3 harmonics:
 <img src="images/demo_harz_3deg.png" width=1000>
 
-For comparision - Result for odelling with 4 harmonics:
+For comparison - Result for modelling with 4 harmonics:
 <img src="images/demo_harz_4deg.png" width=1000>
 
 The function can also be applied on a multi-layer raster stack to create a cloud-interpolated psuedo times-series data set:
